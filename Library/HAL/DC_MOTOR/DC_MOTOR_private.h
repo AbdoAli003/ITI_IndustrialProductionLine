@@ -1,0 +1,6 @@
+#ifndef HAL_DC_MOTOR_DC_MOTOR_PRIVATE_H_
+#define HAL_DC_MOTOR_DC_MOTOR_PRIVATE_H_
+
+
+
+#endif

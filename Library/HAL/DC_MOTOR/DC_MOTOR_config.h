@@ -1,0 +1,7 @@
+#ifndef HAL_DC_MOTOR_DC_MOTOR_CONFIG_H_
+#define HAL_DC_MOTOR_DC_MOTOR_CONFIG_H_
+
+#define DC_MOTOR_PORT 	DIO_u8_PORTB
+#define DC_MOTOR_PIN 	DIO_u8_PIN7
+
+#endif
