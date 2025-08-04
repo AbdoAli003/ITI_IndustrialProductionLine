@@ -21,26 +21,28 @@
 void TWI_voidInitMaster(u8 Copy_u8Address)
 {
 	/*Enable Acknowledge Bit*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWEA);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEA);
+
 	/*Set SCL frequency to 100KHz, with 8MHz system frequency*/
-	// SET_BIT(TWI_u8_TWSR_REG,TWI_u8_TWSR_TWPS0);
-	// SET_BIT(TWI_u8_TWSR_REG,TWI_u8_TWSR_TWPS1);
 	/*1- Set TWI_u8_TWBR = 2*/
-	TWI_u8_TWBR_REG	= 2;
+	TWI_u8_TWBR_REG = 2;
 	/*2- Clear The Prescaler bit (TWPS0 - TWPS1)*/
-	CLR_BIT(TWI_u8_TWSR_REG,TWI_u8_TWSR_TWPS0);
-	CLR_BIT(TWI_u8_TWSR_REG,TWI_u8_TWSR_TWPS1);
+	CLR_BIT(TWI_u8_TWSR_REG, TWI_u8_TWSR_TWPS0);
+	CLR_BIT(TWI_u8_TWSR_REG, TWI_u8_TWSR_TWPS1);
+
 	/*Check if the master node will be addressed or not*/
-	if (Copy_u8Address == 0)
+	if(Copy_u8Address == 0)
 	{
-		// Do nothing
+		/*Do Nothing*/
 	}
 	else
 	{
-		TWI_u8_TWAR_REG	= (Copy_u8Address << 1);
+		/*Set The Required Address to The Master*/
+		TWI_u8_TWAR_REG = (Copy_u8Address << 1);
 	}
+
 	/*Enable TWI*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWEN);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEN);
 }
 
 /*********************************************************************************/
@@ -54,11 +56,13 @@ void TWI_voidInitMaster(u8 Copy_u8Address)
 void TWI_voidInitSlave(u8 Copy_u8Address)
 {
 	/*Set The Required Address to The Slave*/
-	TWI_u8_TWAR_REG	= (Copy_u8Address << 1);
+	TWI_u8_TWAR_REG = Copy_u8Address << 1;
+
 	/*Enable Acknowledge Bit*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWEA);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEA);
+
 	/*Enable TWI*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWEN);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEN);
 }
 
 /*********************************************************************************/
@@ -70,22 +74,24 @@ void TWI_voidInitSlave(u8 Copy_u8Address)
 TWI_ErrorStatus_t TWI_ErrorStatusSendStartConditionWithACK(void)
 {
 	TWI_ErrorStatus_t Local_ErrorStatus = NoError;
-	// TWI_u8_TWCR_REG |= (1 << TWI_u8_TWCR_TWINT) | (1 << TWI_u8_TWCR_TWSTA) | (1 << TWI_u8_TWCR_TWEN);
+//	TWI_u8_TWCR |= (1 << TWI_u8_TWCR_TWINT) | (1 << TWI_u8_TWCR_TWSTA) | (1 << TWI_u8_TWCR_TWEN);
 	/*Send Start Condition Bit*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWSTA);
+		SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWSTA);
+
 	/*Clear The TWINT Flag*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
+
 	/*wait until the operation finishes and the flag is raised again*/
-	while (!GET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT));
-	if (TWI_u8_TWSR_REG	&& STATUS_BIT_MASK != START_ACK)
+	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
+
+	if((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != START_ACK)
 	{
 		Local_ErrorStatus = StartConditionError;
 	}
 	else
 	{
-		// Do nothing
+		/*Do Nothing*/
 	}
-	/*Check For The Condition Status Code*/
 	return Local_ErrorStatus;
 }
 
@@ -98,22 +104,21 @@ TWI_ErrorStatus_t TWI_ErrorStatusSendStartConditionWithACK(void)
 TWI_ErrorStatus_t TWI_ErrorStatusSendRepeatedStartConditionWithACK(void)
 {
 	TWI_ErrorStatus_t Local_ErrorStatus = NoError;
-	// TWI_u8_TWCR_REG |= (1 << TWI_u8_TWCR_TWINT) | (1 << TWI_u8_TWCR_TWSTA) | (1 << TWI_u8_TWCR_TWEN);
+	TWI_u8_TWCR_REG |= (1 << TWI_u8_TWCR_TWINT) | (1 << TWI_u8_TWCR_TWSTA) | (1 << TWI_u8_TWCR_TWEN);
 	/*Send Start Condition Bit*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWSTA);
+	//	SET_BIT(TWI_u8_TWCR, TWI_u8_TWCR_TWSTA);
+
 	/*Clear The TWINT Flag*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT);
+	//	SET_BIT(TWI_u8_TWCR, TWI_u8_TWCR_TWINT);
+
 	/*wait until the operation finishes and the flag is raised again*/
-	while (!GET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT));
-	if (TWI_u8_TWSR_REG	&& STATUS_BIT_MASK != START_ACK)
+	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
+
+	/*Check For The Condition Status Code*/
+	if((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != REP_START_ACK)
 	{
 		Local_ErrorStatus = RepeatedStartError;
 	}
-	else
-	{
-		// Do nothing
-	}
-	/*Check For The Condition Status Code*/
 	return Local_ErrorStatus;
 }
 
@@ -129,23 +134,24 @@ TWI_ErrorStatus_t TWI_ErrorStatusSendSlaveAddressWithWriteACK(u8 Copy_u8SlaveAdd
 	u8 Local_u8TWI_u8_TWCRValue = 0;
 
 	/*Set 7 bits slave address to the bus*/
-	TWI_u8_TWDR_REG	= (Copy_u8SlaveAddress << 1);
+	TWI_u8_TWDR_REG = (Copy_u8SlaveAddress << 1);
+
 	/*Set The Write Request in the LSB in the data Register*/
-	CLR_BIT(TWI_u8_TWDR_REG,TWI_u8_TWDR_TWD0);
+	CLR_BIT(TWI_u8_TWDR_REG, TWI_u8_TWDR_TWD0);
+
 	/*Clear The Start Condition Bit*/
-	CLR_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWSTA);
+	CLR_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWSTA);
+
 	/*Clear The TWINT Flag*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
+
 	/*wait until the operation finishes and the flag is raised again*/
-	while (!GET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT));
+	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
+
 	/*Check For The Condition Status Code*/
-	if (TWI_u8_TWSR_REG	&& STATUS_BIT_MASK != SLAVE_ADD_AND_WR_ACK)
+	if((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != SLAVE_ADD_AND_WR_ACK)
 	{
 		Local_ErrorStatus = SlaveAddressWithWriteError;
-	}
-	else
-	{
-		// Do nothing
 	}
 	return Local_ErrorStatus;
 }
@@ -162,23 +168,24 @@ TWI_ErrorStatus_t TWI_ErrorStatusSendSlaveAddressWithReadACK(u8 Copy_u8SlaveAddr
 	TWI_ErrorStatus_t Local_ErrorStatus = NoError;
 
 	/*Set 7 bits slave address to the bus*/
-	TWI_u8_TWDR_REG	= (Copy_u8SlaveAddress << 1);
+	TWI_u8_TWDR_REG = Copy_u8SlaveAddress << 1;
+
 	/*Set The Read Request in the LSB in the data Register*/
-	SET_BIT(TWI_u8_TWDR_REG,TWI_u8_TWDR_TWD0);
+	SET_BIT(TWI_u8_TWDR_REG, TWI_u8_TWDR_TWD0);
+
 	/*Clear The Start Condition Bit*/
-	CLR_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWSTA);
+	CLR_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWSTA);
+
 	/*Clear The TWINT Flag*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
+
 	/*wait until the operation finishes and the flag is raised again*/
-	while (!GET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT));
+	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
+
 	/*Check For The Condition Status Code*/
-	if (TWI_u8_TWSR_REG	&& STATUS_BIT_MASK != SLAVE_ADD_AND_RD_ACK)
+	if((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != SLAVE_ADD_AND_RD_ACK)
 	{
 		Local_ErrorStatus = SlaveAddressWithReadError;
-	}
-	else
-	{
-		// Do nothing
 	}
 	return Local_ErrorStatus;
 }
@@ -200,19 +207,21 @@ TWI_ErrorStatus_t TWI_ErrorStatusMasterWriteDataByteWithACK(u8 Copy_u8DataByte)
 
 
 	/*Set The Data To The TWI_u8_TWDR Register*/
-	TWI_u8_TWDR_REG	= Copy_u8DataByte;
+	TWI_u8_TWDR_REG = Copy_u8DataByte;
+
+
+
 	/*Clear The TWINT Flag*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
+
+
 	/*wait until the operation finishes and the flag is raised again*/
-	while (!GET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT));
+	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
+
 	/*Check For The Condition Status Code*/
-	if (TWI_u8_TWSR_REG	&& STATUS_BIT_MASK != MSTR_WR_BYTE_ACK )
+	if((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != MSTR_WR_BYTE_ACK)
 	{
 		Local_ErrorStatus = MasterWriteByteWithACKError;
-	}
-	else
-	{
-		// Do nothing
 	}
 	return Local_ErrorStatus;
 }
@@ -229,21 +238,22 @@ TWI_ErrorStatus_t TWI_ErrorStatusMasterReadDataByteWithACK(u8 * Copy_pu8Received
 {
 	TWI_ErrorStatus_t Local_ErrorStatus = NoError;
 
-	/*Clear The TWINT Flag, To Make The Slave To Send its Data*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT);
-	/*wait until the operation finishes and the flag is raised again*/
-	while (!GET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT));
-	/*Check For The Condition Status Code*/
-	if (TWI_u8_TWSR_REG	&& STATUS_BIT_MASK != MSTR_RD_BYTE_WITH_ACK)
+	/* Clear TWINT to start receiving */
+	CLR_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEA); // NACK
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
+
+	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
+
+	if ((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != MSTR_RD_BYTE_WITH_NACK)
 	{
 		Local_ErrorStatus = MasterReadByteWithACKError;
 	}
 	else
 	{
-		// Do nothing
+		*Copy_pu8ReceivedByte = TWI_u8_TWDR_REG;
 	}
-	return Local_ErrorStatus;
 
+	return Local_ErrorStatus;
 }
 
 /*********************************************************************************/
@@ -256,15 +266,8 @@ void TWI_voidSendStopCondition(void)
 {
 
 	/*Send a stop condition on the bus*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWSTO);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWSTO);
+
 	/*Clear The TWINT Flag*/
-	SET_BIT(TWI_u8_TWCR_REG,TWI_u8_TWCR_TWINT);
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
 }
-
-
-
-
-
-
-
-
