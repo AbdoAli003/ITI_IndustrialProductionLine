@@ -10,8 +10,8 @@
 
 void DIO_voidInit (void)
 {
-	DIO_u8SetPinDirection(DIO_u8_PORTD, DIO_u8_PIN0 ,DIO_u8_INPUT);
-	DIO_u8SetPinDirection(DIO_u8_PORTD, DIO_u8_PIN1 ,DIO_u8_OUTPUT);
+	/* Direction for IR Sensor pin */
+	DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN0 ,DIO_u8_INPUT);
 
 }
 
