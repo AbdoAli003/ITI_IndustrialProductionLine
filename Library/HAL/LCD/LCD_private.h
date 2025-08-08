@@ -6,4 +6,4 @@
 
 
 
-#endif /* HAL_LCD_LCD_PRIVATE_H_ */
+#endif

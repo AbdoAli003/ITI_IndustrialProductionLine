@@ -31,4 +31,4 @@
 
 
 
-#endif /* MCAL_ADC_ADC_CONFIG_H_ */
+#endif
