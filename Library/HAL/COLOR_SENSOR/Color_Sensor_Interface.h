@@ -17,15 +17,18 @@
 #define TCS3200_OUT_PORT 	DIO_u8_PORTD
 #define TCS3200_OUT_PIN 	DIO_u8_PIN2
 
-#define TCS3200_COLOR_RED 		0
-#define TCS3200_COLOR_GREEN 	1
-#define TCS3200_COLOR_BLUE 		2
-#define TCS3200_COLOR_CLEAR 	3
+#define RED 				0
+#define GREEN 				1
+#define BLUE 				2
+#define CLEAR 				3
+#define UNDEFINED			4
 
-void TCS3200_voidInit(void);
-void TCS3200_voidSelectColor(u8 Copy_u8Color);
-u16 TCS3200_u16ReadFrequencyHz(void);
-void TCS3200_EXTI_ISR(void);
-const u8 *TCS3200_pu8DetectColor(void);
+
+void 	TCS3200_voidInit(void);
+void 	TCS3200_voidSelectColor(u8 Copy_u8Color);
+u16 	TCS3200_u16ReadFrequencyHz(void);
+void 	TCS3200_EXTI_ISR(void);
+void 	TCS3200_voidDetectColor(void);
+u8 		TCS3200_u8Getcurrentcolor(void);
 
 #endif

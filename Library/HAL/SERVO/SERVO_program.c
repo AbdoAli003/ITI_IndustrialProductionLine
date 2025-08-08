@@ -14,8 +14,35 @@
 #include "SERVO_interface.h"
 #include "SERVO_private.h"
 
+u8 SERVO_u8Servo1_color;
+u8 SERVO_u8Servo2_color;
+
+void SERVO_voidSetColor(u8 Copy_u8ServoNum, u8 Copy_u8Color)
+{
+	if (Copy_u8ServoNum == 1)
+	{
+		SERVO_u8Servo1_color = Copy_u8Color;
+	}
+	else if (Copy_u8ServoNum == 2)
+	{
+		SERVO_u8Servo2_color = Copy_u8Color;
+	}
+}
+u8 SERVO_u8GetServoColor(u8 Copy_u8ServoNum)
+{
+	if (Copy_u8ServoNum == 1)
+	{
+		return SERVO_u8Servo1_color;
+	}
+	else if (Copy_u8ServoNum == 2)
+	{
+		return SERVO_u8Servo2_color;
+	}
+	return 4;
+}
+
 void SERVO_voidPush(u8 Copy_u8ServoNum) {
-	if (Copy_u8ServoNum == 0) {
+	if (Copy_u8ServoNum == 1) {
   for (u8 i = 0; i < 254; i++) {
     TIMER_voidSetDutyCycle(i);
     _delay_ms(5);
@@ -25,7 +52,7 @@ void SERVO_voidPush(u8 Copy_u8ServoNum) {
     _delay_ms(5);
   }
 	}
-	else if (Copy_u8ServoNum == 1)
+	else if (Copy_u8ServoNum == 2)
 	{
 		// --- Sweep from 0° to 180° ---
 

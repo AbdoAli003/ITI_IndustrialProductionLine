@@ -10,11 +10,11 @@
 #include "IR_Sensor_interface.h"
 #include "IR_Sensor_private.h"
 
-u8 IR_Sensoru8GetValue(u8 Copy_u8IR) {
+u8 IR_Sensoru8GetValue(u8 Copy_u8IRNum) {
   u8 IR_Sensor_u8Value;
-  if (Copy_u8IR == 0)
+  if (Copy_u8IRNum == 1)
   DIO_u8GetPinValue(IR_Sensoru8Port, IR1_Sensoru8PIN, &IR_Sensor_u8Value);
-  else if (Copy_u8IR == 1)
+  else if (Copy_u8IRNum == 2)
 	  DIO_u8GetPinValue(IR_Sensoru8Port, IR2_Sensoru8PIN, &IR_Sensor_u8Value);
   return IR_Sensor_u8Value;
 }

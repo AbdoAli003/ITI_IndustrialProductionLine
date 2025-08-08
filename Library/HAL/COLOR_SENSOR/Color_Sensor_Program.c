@@ -12,6 +12,7 @@
 #include "MCAL/UART/UART_interface.h"
 #include <util/delay.h>
 
+static volatile u8 current_color = UNDEFINED;
 static volatile u8 rising_edge_count = 0;
 static volatile u16 timer_start = 0;
 static volatile u16 timer_end = 0;
@@ -45,22 +46,22 @@ void TCS3200_voidInit(void) {
 
 void TCS3200_voidSelectColor(u8 Copy_u8Color) {
   switch (Copy_u8Color) {
-  case TCS3200_COLOR_RED:
+  case RED:
     DIO_u8SetPinValue(TCS3200_S2_PORT, TCS3200_S2_PIN, DIO_u8_LOW);
     DIO_u8SetPinValue(TCS3200_S3_PORT, TCS3200_S3_PIN, DIO_u8_LOW);
     break;
 
-  case TCS3200_COLOR_GREEN:
+  case GREEN:
     DIO_u8SetPinValue(TCS3200_S2_PORT, TCS3200_S2_PIN, DIO_u8_HIGH);
     DIO_u8SetPinValue(TCS3200_S3_PORT, TCS3200_S3_PIN, DIO_u8_HIGH);
     break;
 
-  case TCS3200_COLOR_BLUE:
+  case BLUE:
     DIO_u8SetPinValue(TCS3200_S2_PORT, TCS3200_S2_PIN, DIO_u8_LOW);
     DIO_u8SetPinValue(TCS3200_S3_PORT, TCS3200_S3_PIN, DIO_u8_HIGH);
     break;
 
-  case TCS3200_COLOR_CLEAR:
+  case CLEAR:
     DIO_u8SetPinValue(TCS3200_S2_PORT, TCS3200_S2_PIN, DIO_u8_HIGH);
     DIO_u8SetPinValue(TCS3200_S3_PORT, TCS3200_S3_PIN, DIO_u8_LOW);
     break;
@@ -88,21 +89,21 @@ u16 TCS3200_u16ReadFrequencyHz(void) {
   // Frequency = 8,000,000 / (64 × period_counts) = 125000 / period_counts
   return (125000UL / period_counts);
 }
-const u8 *TCS3200_pu8DetectColor(void) {
+void TCS3200_voidDetectColor(void) {
   u16 avgFreq, redFreq, greenFreq, blueFreq;
 
   // Measure RED
-  TCS3200_voidSelectColor(TCS3200_COLOR_RED);
+  TCS3200_voidSelectColor(RED);
   _delay_ms(100);
   redFreq = TCS3200_u16ReadFrequencyHz();
 
   // Measure GREEN
-  TCS3200_voidSelectColor(TCS3200_COLOR_GREEN);
+  TCS3200_voidSelectColor(GREEN);
   _delay_ms(100);
   greenFreq = TCS3200_u16ReadFrequencyHz();
 
   // Measure BLUE
-  TCS3200_voidSelectColor(TCS3200_COLOR_BLUE);
+  TCS3200_voidSelectColor(BLUE);
   _delay_ms(100);
   blueFreq = TCS3200_u16ReadFrequencyHz();
   avgFreq = (redFreq + greenFreq + blueFreq) / 3;
@@ -114,11 +115,16 @@ const u8 *TCS3200_pu8DetectColor(void) {
   }
 
   Determine dominant color — higher frequency means higher intensity*/
-  if (redFreq > greenFreq && redFreq > blueFreq)
-    return "RED";
-  else if (greenFreq > redFreq && greenFreq > blueFreq)
-    return "GREEN";
-  else if (blueFreq > redFreq && blueFreq > greenFreq)
-    return "BLUE";
-  return "UNKNOWN";
+  if (redFreq >= greenFreq && redFreq >= blueFreq)
+    current_color=0;
+  else if (greenFreq >= redFreq && greenFreq >= blueFreq)
+    current_color=1;
+  else if (blueFreq >= redFreq && blueFreq >= greenFreq)
+    current_color=2;
+  else
+  current_color=4;
+}
+u8 TCS3200_u8Getcurrentcolor(void)
+{
+	return current_color;
 }
