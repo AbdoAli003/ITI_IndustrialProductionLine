@@ -4,6 +4,6 @@
 #ifndef HAL_SERVO_SERVO_INTERFACE_H_
 #define HAL_SERVO_SERVO_INTERFACE_H_
 
-void SERVO_voidPush();
+void SERVO_voidPush(u8 Copy_u8ServoNum);
 
 #endif

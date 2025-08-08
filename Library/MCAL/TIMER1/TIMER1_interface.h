@@ -17,9 +17,10 @@
 #define	FPWM_ICR1_MODE							14
 #define	FPWM_OCR1A_MODE							15
 
-#define TIMER1_MODE								NORMAL_MODE
+#define TIMER1_MODE								FPWM_ICR1_MODE
 
 void TIMER1_voidInit();
+void TIMER1_voidFPWN_8_Init();
 void TIMER1_voidSetCompareValue(u16 Copy_u16Value);
 
 #endif /* MCAL_TIMER1_TIMER1_INTERFACE_H_ */

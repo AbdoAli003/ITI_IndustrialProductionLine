@@ -101,9 +101,24 @@ void TIMER1_voidInit() {
     break;
   }
   ICR1 = 20000;
-  // 64 Prescaler
-  SET_BIT(TCCR1B, TCCR1B_u8_CS10);
+  // 8 Prescaler
+  CLR_BIT(TCCR1B, TCCR1B_u8_CS10);
   SET_BIT(TCCR1B, TCCR1B_u8_CS11);
   CLR_BIT(TCCR1B, TCCR1B_u8_CS12);
+}
+void TIMER1_voidFPWN_8_Init()
+{
+    CLR_BIT(TCCR1A, 0); // WGM10 = 0
+    SET_BIT(TCCR1A, 1); // WGM11 = 1
+    SET_BIT(TCCR1B, 3); // WGM12 = 1
+    SET_BIT(TCCR1B, 4); // WGM13 = 1
+    // Fast PWM mode 14, TOP = ICR1
+    TCCR1A = (1 << TCCR1A_u8_WGM11) | (1 << 7);
+    TCCR1B = (1 << TCCR1B_u8_WGM13) | (1 << TCCR1B_u8_WGM12) | (1 << TCCR1B_u8_CS11); // Prescaler 8
+
+    // --- Set TOP value for 20ms period (50Hz) ---
+    ICR1 = 19999; // 20ms at 0.5us per tick
+
+
 }
 void TIMER1_voidSetCompareValue(u16 Copy_u16Value) { OCR1A = Copy_u16Value; }

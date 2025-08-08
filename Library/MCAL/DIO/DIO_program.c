@@ -7,8 +7,9 @@
 #include "DIO_private.h"
 
 void DIO_voidInit(void) {
-	  /* Direction for IR Sensor pin */
+	  /* Direction for IR Sensor pins */
 	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN0, DIO_u8_INPUT);
+	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN1, DIO_u8_INPUT);
 	  /* Direction for COLOR_SENSOR Sensor pin */
 	  DIO_u8SetPinDirection(DIO_u8_PORTA, DIO_u8_PIN0, DIO_u8_OUTPUT);
 	  DIO_u8SetPinDirection(DIO_u8_PORTA, DIO_u8_PIN1, DIO_u8_OUTPUT);
