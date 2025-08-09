@@ -21,6 +21,7 @@
 
 void TIMER1_voidInit();
 void TIMER1_voidFPWN_8_Init();
-void TIMER1_voidSetCompareValue(u16 Copy_u16Value);
+void TIMER1_voidSetCompareValueA(u16 Copy_u16Value);
+void TIMER1_voidSetCompareValueB(u16 Copy_u16Value);
 
 #endif /* MCAL_TIMER1_TIMER1_INTERFACE_H_ */

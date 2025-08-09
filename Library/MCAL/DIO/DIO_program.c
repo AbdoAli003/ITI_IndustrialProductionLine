@@ -8,8 +8,14 @@
 
 void DIO_voidInit(void) {
 	  /* Direction for IR Sensor pins */
-	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN0, DIO_u8_INPUT);
-	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN1, DIO_u8_INPUT);
+	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN5, DIO_u8_INPUT);
+	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN6, DIO_u8_INPUT);
+	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN7, DIO_u8_INPUT);
+	  /* Direction for External EEPROM pins */
+	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN1, DIO_u8_OUTPUT);
+	  DIO_u8SetPinDirection(DIO_u8_PORTC, DIO_u8_PIN0, DIO_u8_OUTPUT);
+	  DIO_u8SetPinValue(DIO_u8_PORTC, DIO_u8_PIN1, DIO_u8_LOW);
+	  DIO_u8SetPinValue(DIO_u8_PORTC, DIO_u8_PIN0, DIO_u8_LOW);
 	  /* Direction for COLOR_SENSOR Sensor pin */
 	  DIO_u8SetPinDirection(DIO_u8_PORTA, DIO_u8_PIN0, DIO_u8_OUTPUT);
 	  DIO_u8SetPinDirection(DIO_u8_PORTA, DIO_u8_PIN1, DIO_u8_OUTPUT);
@@ -20,6 +26,9 @@ void DIO_voidInit(void) {
 	  /* Direction for URAT pin */
 	  DIO_u8SetPinDirection(DIO_u8_PORTD, DIO_u8_PIN0, DIO_u8_INPUT);
 	  DIO_u8SetPinDirection(DIO_u8_PORTD, DIO_u8_PIN1, DIO_u8_OUTPUT);
+	  /* Direction for TIMER1 OCRIA and OCR1B */
+	  DIO_u8SetPinDirection(DIO_u8_PORTD, DIO_u8_PIN5, DIO_u8_OUTPUT);
+	  DIO_u8SetPinDirection(DIO_u8_PORTD, DIO_u8_PIN4, DIO_u8_OUTPUT);
 }
 
 u8 DIO_u8SetPinDirection(u8 Copy_u8PortId, u8 Copy_u8PinId,

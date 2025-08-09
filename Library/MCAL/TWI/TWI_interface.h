@@ -15,6 +15,7 @@ typedef enum
 	SlaveAddressWithReadError,
 	MasterWriteByteWithACKError,
 	MasterReadByteWithACKError,
+	MasterReadByteWithNACKError,
 }TWI_ErrorStatus_t;
 
 /*********************************************************************************/
@@ -88,6 +89,8 @@ TWI_ErrorStatus_t TWI_ErrorStatusMasterWriteDataByteWithACK(u8 Copy_u8DataByte);
 /* *Copy_pu8ReceivedByte options: Address of variable to store the received byte**/
 /*********************************************************************************/
 TWI_ErrorStatus_t TWI_ErrorStatusMasterReadDataByteWithACK(u8 * Copy_pu8ReceivedByte);
+
+TWI_ErrorStatus_t TWI_ErrorStatusMasterReadDataByteWithNACK(u8 * Copy_pu8ReceivedByte);
 
 /*********************************************************************************/
 /* Function: TWI_voidSendStopCondition	                       				    **/

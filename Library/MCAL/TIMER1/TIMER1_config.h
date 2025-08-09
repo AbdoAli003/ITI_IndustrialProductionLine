@@ -3,6 +3,10 @@
 
 #define TCCR1A_u8_WGM10		0
 #define TCCR1A_u8_WGM11		1
+#define TCCR1A_u8_COM1B0	4
+#define TCCR1A_u8_COM1B1	6
+#define TCCR1A_u8_COM1A0	6
+#define TCCR1A_u8_COM1A1	7
 
 #define TCCR1B_u8_CS10		0
 #define TCCR1B_u8_CS11		1

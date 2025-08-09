@@ -87,6 +87,9 @@ u8 EEPROM_u8ReadDataByte(u16 Copy_u16LocationAddress) {
   /*Get the data from memory*/
   TWI_ErrorStatusMasterReadDataByteWithACK(&Local_u8Data);
 
+  u8 test;
+  TWI_ErrorStatusMasterReadDataByteWithNACK(&test);
+
   /*send the stop condition*/
   TWI_voidSendStopCondition();
 

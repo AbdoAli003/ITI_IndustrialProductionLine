@@ -10,6 +10,7 @@
 #include "MCAL/EXTI/EXTI_Private.h"
 #include "MCAL/TIMER/TIMER_interface.h"
 #include "MCAL/UART/UART_interface.h"
+#include "HAL/IR_Sensor/IR_Sensor_interface.h"
 #include <util/delay.h>
 
 static volatile u8 current_color = UNDEFINED;
@@ -115,16 +116,15 @@ void TCS3200_voidDetectColor(void) {
   }
 
   Determine dominant color — higher frequency means higher intensity*/
+  while (IR_Sensoru8GetValue(3))
+    ; // Wait until there is an object near color sensor
   if (redFreq >= greenFreq && redFreq >= blueFreq)
-    current_color=0;
+    current_color = 0;
   else if (greenFreq >= redFreq && greenFreq >= blueFreq)
-    current_color=1;
+    current_color = 1;
   else if (blueFreq >= redFreq && blueFreq >= greenFreq)
-    current_color=2;
+    current_color = 2;
   else
-  current_color=4;
+    current_color = 4;
 }
-u8 TCS3200_u8Getcurrentcolor(void)
-{
-	return current_color;
-}
+u8 TCS3200_u8Getcurrentcolor(void) { return current_color; }
