@@ -65,8 +65,8 @@
 #define DIO_u8_PB6_INTIAL_VALUE                                  DIO_u8_INPUT_FLOATING
 #define DIO_u8_PB7_INTIAL_VALUE                                  DIO_u8_INPUT_FLOATING
 /* PORTC */
-#define DIO_u8_PC0_INTIAL_VALUE                                  DIO_u8_INPUT_FLOATING
-#define DIO_u8_PC1_INTIAL_VALUE                                  DIO_u8_INPUT_FLOATING
+#define DIO_u8_PC0_INTIAL_VALUE                                  DIO_u8_OUTPUT_LOW
+#define DIO_u8_PC1_INTIAL_VALUE                                  DIO_u8_OUTPUT_LOW
 #define DIO_u8_PC2_INTIAL_VALUE                                  DIO_u8_INPUT_FLOATING
 #define DIO_u8_PC3_INTIAL_VALUE                                  DIO_u8_INPUT_FLOATING
 #define DIO_u8_PC4_INTIAL_VALUE                                  DIO_u8_INPUT_FLOATING

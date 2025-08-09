@@ -27,8 +27,8 @@ void TWI_voidInitMaster(u8 Copy_u8Address)
 	/*1- Set TWI_u8_TWBR = 2*/
 	TWI_u8_TWBR_REG = 2;
 	/*2- Clear The Prescaler bit (TWPS0 - TWPS1)*/
-	CLR_BIT(TWI_u8_TWSR_REG, TWI_u8_TWSR_TWPS0);
-	CLR_BIT(TWI_u8_TWSR_REG, TWI_u8_TWSR_TWPS1);
+	SET_BIT(TWI_u8_TWSR_REG, TWI_u8_TWSR_TWPS0);
+	SET_BIT(TWI_u8_TWSR_REG, TWI_u8_TWSR_TWPS1);
 
 	/*Check if the master node will be addressed or not*/
 	if(Copy_u8Address == 0)
@@ -239,12 +239,11 @@ TWI_ErrorStatus_t TWI_ErrorStatusMasterReadDataByteWithACK(u8 * Copy_pu8Received
 	TWI_ErrorStatus_t Local_ErrorStatus = NoError;
 
 	/* Clear TWINT to start receiving */
-	CLR_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEA); // NACK
 	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
 
 	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
 
-	if ((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != MSTR_RD_BYTE_WITH_NACK)
+	if ((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != MSTR_RD_BYTE_WITH_ACK)
 	{
 		Local_ErrorStatus = MasterReadByteWithACKError;
 	}
@@ -256,6 +255,29 @@ TWI_ErrorStatus_t TWI_ErrorStatusMasterReadDataByteWithACK(u8 * Copy_pu8Received
 	return Local_ErrorStatus;
 }
 
+TWI_ErrorStatus_t TWI_ErrorStatusMasterReadDataByteWithNACK(u8 * Copy_pu8ReceivedByte)
+{
+	TWI_ErrorStatus_t Local_ErrorStatus = NoError;
+	CLR_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEA);
+	/*Clear The TWINT Flag, To Make The Slave To Send its Data*/
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT);
+
+	/*wait until the operation finishes and the flag is raised again*/
+	while(GET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWINT) == 0 );
+	SET_BIT(TWI_u8_TWCR_REG, TWI_u8_TWCR_TWEA);
+	/*Check For The Condition Status Code*/
+	if((TWI_u8_TWSR_REG & STATUS_BIT_MASK) != MSTR_RD_BYTE_WITH_NACK)
+	{
+		Local_ErrorStatus = MasterReadByteWithNACKError;
+	}
+	else
+	{
+		/*Read The Received Data*/
+		*Copy_pu8ReceivedByte = TWI_u8_TWDR_REG;
+	}
+
+	return Local_ErrorStatus;
+}
 /*********************************************************************************/
 /* Function: TWI_voidSendStopCondition	                       				    **/
 /* I/P Parameters: Nothing									          		    **/

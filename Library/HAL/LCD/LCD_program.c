@@ -53,3 +53,4 @@ void LCD_voidWriteString(u8 *str) {
     }
   }
 }
+void LCD_voidClear_Displayed() { LCD_voidSendInstruction(CLEARSCREEN); }

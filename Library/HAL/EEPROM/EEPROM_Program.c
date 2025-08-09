@@ -7,8 +7,8 @@
 /***************************************************************************************/
 #include "LIB/STD_TYPES.h"
 #define F_CPU 8000000UL
-#include <util/delay.h>
-
+//#include <util/delay.h>
+#include "LIB/delay.h"
 #include "MCAL/TWI/TWI_interface.h"
 
 #include "HAL/EEPROM/EEPROM_Config.h"
@@ -49,7 +49,7 @@ void EEPROM_voidSendDataByte(u16 Copy_u16LocationAddress, u8 Copy_u8DataByte) {
   TWI_voidSendStopCondition();
 
   /*Delay until the write cycle is finished*/
-  _delay_ms(10);
+  delay_ms(10);
 }
 
 /*********************************************************************************/
@@ -86,6 +86,10 @@ u8 EEPROM_u8ReadDataByte(u16 Copy_u16LocationAddress) {
 
   /*Get the data from memory*/
   TWI_ErrorStatusMasterReadDataByteWithACK(&Local_u8Data);
+
+  u8 test;
+
+  TWI_ErrorStatusMasterReadDataByteWithNACK(&test);
 
   /*send the stop condition*/
   TWI_voidSendStopCondition();

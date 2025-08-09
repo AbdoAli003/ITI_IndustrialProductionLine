@@ -6,7 +6,7 @@
 #define STEPPER						'2'
 
 void KPD_voidInit();
-u8 KPD_u8GetKeyState(u8* Copy_pu8ReturnedKey, u8 ALPHA);
+u8 KPD_u8GetKeyState(u8* Copy_pu8ReturnedKey);
 
 
 #endif
