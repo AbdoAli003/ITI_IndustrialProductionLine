@@ -1,7 +1,7 @@
 # ITI Summer Training Project – Industrial Production Line
 
 ## Overview
-This project is an industrial production line simulation that sorts objects based on their color. The user can configure which color is assigned to each servo motor using a keypad or UART, and the system displays live counts for each sorted color on an LCD.
+This project is an industrial production line simulation that sorts objects based on their color. The user can configure which color is assigned to each servo motor using a keypad or UART, and the system displays live counts for each sorted color on UART.
 
 **Note:** The color sensor requires a suitable light environment to work accurately.
 
