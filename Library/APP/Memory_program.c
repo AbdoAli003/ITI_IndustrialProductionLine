@@ -15,7 +15,6 @@ u8 Memory_u8IsMemory_Initialized() {
   }
 }
 void Memory_voidInitMemory() {
-  EEPROM_voidEEPROMInit();
   if (!Memory_u8IsMemory_Initialized()) {
     redObject = 0;
     greenObject = 0;
