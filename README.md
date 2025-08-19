@@ -28,7 +28,7 @@ This project is an industrial production line simulation that sorts objects base
 - PuTTY for UART interfacing
 
 ## How It Works
-1. User assgins colors withc keypad for each servo.
+1. User assgins colors with keypad for each servo.
 2. Objects move on the conveyor belt driven by the DC motor.
 3. IR sensors detect object presence.
 4. The color sensor identifies the object's color (under proper lighting conditions).
