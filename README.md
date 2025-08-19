@@ -25,6 +25,7 @@ This project is an industrial production line simulation that sorts objects base
 ## Software & Tools
 - AVR-GCC for compiling C code
 - AVRDUDE for uploading firmware
+- PuTTY for UART interfacing
 
 ## How It Works
 1. User assgins colors withc keypad for each servo.
